@@ -1,0 +1,26 @@
+services:
+  resume-tailor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resume-tailor
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./src:/app/src
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL_NAME=${MODEL_NAME:-gpt-4}
+      - MAX_TOKENS=${MAX_TOKENS:-2000}
+      - TEMPERATURE=${TEMPERATURE:-0.7}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    restart: unless-stopped
+    # Healthcheck disabled to reduce log noise
+    # healthcheck:
+    #   test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+    #   interval: 3000s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s

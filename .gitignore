@@ -1,0 +1,191 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environments (must be first to catch all files)
+env_p1/
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+bin/
+include/
+lib/
+lib64/
+pyvenv.cfg
+pip-selfcheck.json
+
+# Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.dylib
+*.dll
+
+# Large binary files
+*.cpython-*
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+site-packages/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Data files and outputs
+data/input/*
+data/output/*
+!data/input/.gitkeep
+!data/output/.gitkeep
+!data/input/resumes/.gitkeep
+!data/input/jobs/.gitkeep
+
+# Logs and temporary files
+logs/
+*.log
+temp/
+tmp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+*.code-workspace
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# Backup files
+*.backup
+*.old
+*.orig
+
+# API keys and sensitive data
+config/secrets.yaml
+secrets/
+private_keys/
+certificates/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local configuration
+local_settings.py
+settings_local.py
+
+# Sphinx documentation
+docs/_build/
+
+# profiling data
+.prof

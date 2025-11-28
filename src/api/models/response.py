@@ -33,9 +33,10 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     uptime: float
+    message: Optional[str] = None
     dependencies: dict = Field(
         default_factory=lambda: {
             "openai": "healthy",
-            "database": "healthy"
+            "file_system": "ok"
         }
     )

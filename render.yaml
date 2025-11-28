@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: resume-tailor
+    env: docker
+    repo: https://github.com/aravindswamy246/Resume-Tailor
+    branch: master
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false  # Set manually for security
+      - key: MODEL_NAME
+        value: gpt-4
+      - key: MAX_TOKENS
+        value: "2000"
+      - key: TEMPERATURE
+        value: "0.7"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RENDER
+        value: "true"
+      - key: ALLOWED_HOSTS
+        value: resume-tailor.onrender.com
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: resume-tailor-disk
+      mountPath: /app/data
+      sizeGB: 1

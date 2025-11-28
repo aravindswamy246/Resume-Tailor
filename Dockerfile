@@ -4,10 +4,11 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Set environment variables
+# Set environment variables for production
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=/app/src
+    PYTHONPATH=/app/src \
+    PORT=8000
 
 # Install system dependencies
 RUN apt-get update \
@@ -18,20 +19,22 @@ RUN apt-get update \
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
 
-# Create logs directory
-RUN mkdir -p /app/logs && chmod 777 /app/logs
+# Create logs directory with proper permissions
+RUN mkdir -p /app/logs /app/data/input /app/data/output
 
 # Create non-root user
-RUN adduser --disabled-password --gecos "" appuser
+RUN adduser --disabled-password --gecos "" appuser \
+    && chown -R appuser:appuser /app
 USER appuser
 
-# Expose port
-EXPOSE 8000
+# Expose port (Render uses PORT env var)
+EXPOSE $PORT
 
-# Run the application with uvicorn
-CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Production command - NO --reload flag, multiple workers
+CMD uvicorn src.api.app:app --host 0.0.0.0 --port $PORT --workers 4

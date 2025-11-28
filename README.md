@@ -1,23 +1,59 @@
-# Resume Tailor
+# Resume Tailor API 🚀
 
-AI-powered resume tailoring tool that customizes your resume to match job descriptions using OpenAI's GPT API.
+A production-ready FastAPI service for intelligently tailoring resumes using OpenAI's GPT models.
 
-## Features
-- Automated resume tailoring based on job descriptions
-- OpenAI GPT integration for intelligent content generation
-- RESTful API with FastAPI
-- **File upload support** (PDF, DOCX, TXT) via Swagger UI
-- **Token usage and cost tracking** per API call
-- Real-time cost calculation with detailed metrics
-- File monitoring and logging support
-- Configurable model parameters
-- Rate limiting and request validation
-- Docker containerization with hot-reload for development
-- Comprehensive error handling and logging
-- Interactive API documentation with Swagger UI
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aravindswamy246/Resume-Tailor)
+
+## ✨ Features
+
+### 🎯 Core Functionality
+- **Smart Resume Tailoring**: AI-powered customization based on job descriptions
+- **Multiple Input Formats**: Support for PDF, DOCX, and TXT files
+- **OpenAI Integration**: Powered by GPT-4 for intelligent content adaptation
+
+### 🔒 Production Security
+- **Environment Validation**: Validates all required settings on startup
+- **CORS Protection**: Configurable allowed origins for production
+- **TrustedHost Middleware**: Prevents host header attacks
+- **Non-root Container**: Runs as unprivileged user for security
+
+### ⚡ Performance & Monitoring
+- **Multi-worker Setup**: 4 uvicorn workers for high concurrency
+- **Cost Tracking**: Real-time OpenAI usage and cost monitoring
+- **Health Monitoring**: Comprehensive dependency checking
+- **GZip Compression**: Automatic response compression
+
+### 🛠️ Developer Experience
+- **Interactive API Docs**: Complete Swagger UI documentation
+- **Docker Ready**: Optimized containerized deployment
+- **One-click Deploy**: Easy deployment to Render.com
+- **Comprehensive Logging**: Structured logging for production monitoring
+
+## 🚀 Quick Start
+
+### Production Deployment (Recommended)
+
+1. **Deploy to Render** (1-click deploy):
+   [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/aravindswamy246/Resume-Tailor)
+
+2. **Set Environment Variables** in Render dashboard:
+   ```bash
+   OPENAI_API_KEY=sk-proj-your-key-here
+   MODEL_NAME=gpt-4
+   MAX_TOKENS=2000
+   RENDER=true
+   ALLOWED_HOSTS=your-app-name.onrender.com
+   ```
+
+3. **Test Your API**:
+   ```bash
+   curl https://your-app.onrender.com/health
+   ```
+
+### Local Development
 
 ## Prerequisites
-- Python 3.8 or higher
+- Python 3.10 or higher
 - OpenAI API key
 - macOS/Linux/Windows (cross-platform support)
 - Docker (optional, for containerized deployment)
@@ -53,14 +89,12 @@ p1/
 └── setup.py              # Package setup
 ```
 
-## Installation
-
-### Option 1: Local Installation
+## 💻 Local Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd p1
+git clone https://github.com/aravindswamy246/Resume-Tailor.git
+cd Resume-Tailor
 ```
 
 2. Create and activate virtual environment:
@@ -168,32 +202,71 @@ python -m src.main data/input/resumes/Test_Resume.txt data/input/jobs/JD.txt --t
 ```
 4. Find tailored resume in `data/output`
 
-### API Usage
+## 📡 API Usage
 
-#### Starting the API Server
+### Interactive Documentation
+Visit `/docs` for complete Swagger UI documentation:
+```
+https://your-app.onrender.com/docs
+```
 
-**Local Development:**
+### Core Endpoints
+
+#### Health Check
+```bash
+GET /health
+# Returns: service status, version, dependencies
+```
+
+#### Resume Tailoring (Text)
+```bash
+POST /tailor
+Content-Type: application/json
+
+{
+  "job_description": "Python Developer with FastAPI experience",
+  "resume_text": "Your resume content here..."
+}
+```
+
+#### Resume Tailoring (File Upload)
+```bash
+POST /tailor-file
+Content-Type: multipart/form-data
+
+job_description: Python Developer position
+resume_file: @resume.pdf
+```
+
+### Response Format
+```json
+{
+  "status": "success",
+  "tailored_resume": "Enhanced resume content...",
+  "saved_to": "/app/data/output/tailored_resume_20241128_120000.txt",
+  "metadata": {
+    "timestamp": "2024-11-28T12:00:00Z",
+    "processing_time": 2.45,
+    "tokens_used": 1250,
+    "estimated_cost": 0.0375
+  }
+}
+```
+
+### Starting the API Server
+
+#### Production (Render.com)
+Automatically starts with 4 workers
+
+#### Local Development
 ```bash
 python src/api/server.py
 ```
 
-**Docker:**
+#### Docker
 ```bash
-docker start resume-tailor
+docker-compose up -d
 ```
-
-**Docker Compose:**
-```bash
-docker compose up -d
-```
-
-#### Available Endpoints
-
-- `GET /` - API root information
-- `GET /ping` - Basic health check
-- `GET /health` - Detailed health status with dependencies
-- `POST /tailor` - Tailor resume with JSON request body
-- `POST /tailor-upload` - **NEW:** Upload resume and job description files (PDF, DOCX, TXT)
 
 #### API Documentation
 Once the server is running, access interactive API documentation:

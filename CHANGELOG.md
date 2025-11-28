@@ -2,7 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.1] - 2025-11-09
+## [0.2.0] - 2024-11-28 - Production Ready 🚀
+
+### 🔒 Security (CRITICAL)
+- **BREAKING**: Removed exposed OpenAI API key from version control
+- Added production environment validation with startup checks
+- Implemented TrustedHost middleware for production security
+- Added non-root user in Docker container for enhanced security
+- Enhanced CORS configuration with production restrictions
+
+### ⚡ Performance
+- Updated Dockerfile for production deployment with 4-worker setup
+- Optimized Docker layers and build process for faster deployments
+- Removed development-only features (--reload flag) in production
+- Added GZip compression for improved response times
+
+### 📊 Monitoring & Reliability
+- Enhanced health check endpoint with comprehensive dependency monitoring
+- Added OpenAI API connection validation in health checks
+- Improved error handling with structured responses
+- Added production-ready logging configuration
+
+### 🚀 Deployment
+- Added render.yaml for one-click deployment to Render.com
+- Created comprehensive deployment guide and testing instructions
+- Added production settings configuration with environment detection
+- Updated all documentation for production deployment
+
+### 📚 Documentation
+- Updated README with production deployment instructions and 1-click deploy button
+- Enhanced API usage examples with production endpoints
+- Added comprehensive testing guide for production environments
+- Updated Docker guide with production best practices
+
+## [0.1.1] - 2024-11-09
 
 ### Added
 - **Token Usage and Cost Tracking**

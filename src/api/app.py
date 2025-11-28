@@ -42,14 +42,16 @@ app = FastAPI(
 # Add production middleware
 if ProductionSettings.is_production():
     from fastapi.middleware.trustedhost import TrustedHostMiddleware
-    
+
     if ProductionSettings.ALLOWED_HOSTS:
-        app.add_middleware(TrustedHostMiddleware, allowed_hosts=ProductionSettings.ALLOWED_HOSTS)
+        app.add_middleware(TrustedHostMiddleware,
+                           allowed_hosts=ProductionSettings.ALLOWED_HOSTS)
 
 # Remove middleware from FastAPI initialization and add it properly using add_middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if not ProductionSettings.is_production() else ProductionSettings.ALLOWED_HOSTS,
+    allow_origins=[
+        "*"] if not ProductionSettings.is_production() else ProductionSettings.ALLOWED_HOSTS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -81,17 +83,18 @@ async def ping():
 async def health():
     """Enhanced health check endpoint for production monitoring"""
     start_time = time.time()
-    
+
     try:
         # Check OpenAI connection (lightweight test)
         import openai
         client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        
+
         # Just verify the client is configured (doesn't make API call)
-        api_key_valid = bool(client.api_key and client.api_key.startswith("sk-"))
-        
+        api_key_valid = bool(
+            client.api_key and client.api_key.startswith("sk-"))
+
         status = "healthy" if api_key_valid else "degraded"
-        
+
         return HealthResponse(
             status=status,
             version="0.1.0",
@@ -106,7 +109,7 @@ async def health():
         logger.error(f"Health check failed: {str(e)}")
         return HealthResponse(
             status="unhealthy",
-            version="0.1.0", 
+            version="0.1.0",
             uptime=time.time() - start_time,
             message=f"Health check failed: {str(e)}",
             dependencies={
